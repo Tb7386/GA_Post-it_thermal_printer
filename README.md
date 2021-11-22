@@ -1,7 +1,8 @@
 # Google Assistant memo thermal printer
 Add a post-it printer feature for Google Home with Raspberry, a chines 200dpi thermal printer and IFTTT.
 
-![GA_Printer](https://user-images.githubusercontent.com/59627714/142870722-ee2301b1-b301-4a24-92b4-a5bf1afc9e40.png)
+![GA_Printer](https://user-images.githubusercontent.com/59627714/142873517-01c6a2e7-8d10-43d4-815c-9df0b648dd9d.png)
+
 
 **This scripts enables printing on chiness copy of Peripage A6. Due to the use of Python this script should be portable to any environment supported by [PyBluez](https://github.com/pybluez/pybluez)**
 
