@@ -1,4 +1,4 @@
-# GA_Post-it_thermal_printer
+# Google Assistant memo thermal printer
 Add a post-it printer feature for Google Home with Raspberry, a chines 200dpi thermal printer and IFTTT.
 
 ![GA_Printer](https://user-images.githubusercontent.com/59627714/142870722-ee2301b1-b301-4a24-92b4-a5bf1afc9e40.png)
