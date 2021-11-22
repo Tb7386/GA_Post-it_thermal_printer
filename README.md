@@ -38,3 +38,6 @@ Print data (eg 82 -> 1000 0010) :
   - bit[2-7] : number of do
 
 ## Installation
+
+Install requirement :
+apt install git python-pip3
