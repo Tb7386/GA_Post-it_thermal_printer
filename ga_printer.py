@@ -218,7 +218,6 @@ def httpserver(server_class=HTTPServer, handler_class=S, port=8080):
 if __name__ == '__main__':
 
     if args.text:
-        #printer(args.text)
-        imgFromString(args.text,100)
+        printer(args.text)
     if args.port:
         httpserver(port=int(args.port))
