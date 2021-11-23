@@ -29,10 +29,11 @@ args = parser.parse_args()
 # ------------------------------------------------------------------------------
 # printer : Print text from command line or http post request
 # ------------------------------------------------------------------------------
-def printer(text,size=50):
+def printer(text):
     req = bleConnect(args.BTMAC)
     print(text)
     if (req.is_connected()):
+        size=50 if not args.size else args.size
         printText(text, size,req)
         print ("Print end")
         req.disconnect()
@@ -201,8 +202,7 @@ class S(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data = self.rfile.read(content_length) # <--- Gets the data itself
         self._set_response()
-        size=50 if not args.size else args.size
-        printer(post_data.decode('utf-8'),size)
+        printer(post_data.decode('utf-8'))
 
 def httpserver(server_class=HTTPServer, handler_class=S, port=8080,):
     server_address = ('', port)
@@ -230,6 +230,6 @@ if __name__ == '__main__':
         print("ERROR: Please specfiy text with -t or http port server with -p argument")
         sys.exit(1)
     if args.text:
-        printer(args.text,args.size)
+        printer(args.text)
     if args.port:
         httpserver(port=int(args.port))
