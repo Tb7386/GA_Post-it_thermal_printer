@@ -167,3 +167,7 @@ Say :
 ## Autors
 
 * **Thomas BERGER** Tb7386 [@Tb7386](https://github.com/Tb7386)
+
+## License
+
+Project under license ``MIT`` - see [LICENSE.md](LICENSE.md) file for more informations
