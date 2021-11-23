@@ -118,24 +118,42 @@ IFTT can send POST HTTP request with voice command.
 /!\ Free IFTTT account can use only 5 applets
 
 Create new applet
+
 ![image](https://user-images.githubusercontent.com/59627714/143013433-462a681a-71fc-4f9d-9cdb-4f20f632a5cd.png)
+
 Click  **IF ADD** button
+
 ![image](https://user-images.githubusercontent.com/59627714/143013476-1e40b576-0b78-4e60-b669-5e593a503f2f.png)
+
 Search **Google Assistant** service
+
 ![image](https://user-images.githubusercontent.com/59627714/143013559-3c1067b4-948a-49e2-9a1f-27ea77888d14.png)
+
 Select **Say a phrase with a text ingredient** trigger
+
+![image](https://user-images.githubusercontent.com/59627714/143013682-146ca039-15f3-4528-8ec7-2e27fad6339b.png)
 
 Configure trigger. Text print is **$**
 
+![image](https://user-images.githubusercontent.com/59627714/143013756-a86d2765-a805-4a89-bf90-65fcf54026b0.png)
+
 Click **THEN THAT ADD** button
+
+![image](https://user-images.githubusercontent.com/59627714/143013782-40582f66-95e1-4a34-b8c4-a96f59791454.png)
 
 Search **Webhooks** service
 
+![image](https://user-images.githubusercontent.com/59627714/143013839-e60b5a4f-95dc-4903-8737-7aa09f609ce5.png)
+
 Choose **Make a web request** action
+
+![image](https://user-images.githubusercontent.com/59627714/143013877-c2420ebe-142c-4ade-8363-ee133e39f352.png)
 
 Configure action. 
  - IP : is public IP addess of RaspberryPi HTTP server (Public IP of internet box)
  - PORT : is NAT port to access RaspberryPi HTTP server
+
+![image](https://user-images.githubusercontent.com/59627714/143013975-bddbcb1b-9ce0-46e6-beaf-557baecdf9aa.png)
 
 
 Save and test your new feature. 
