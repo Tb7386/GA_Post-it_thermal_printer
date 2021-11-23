@@ -100,4 +100,46 @@ python3 ./GA_Post-it_thermal_printer/ga_printer.py 7A:4D:3B:FD:FE:ED -p 8080
 Start a HTTP server with TCP 8080 listen port.
 You can define font size with "-s" option (font size default = 50)
 
-HTTP server print all text receive with POST requete
+HTTP server print all text receive with POST request
+
+## ADD Google Assistant support
+
+IFTT can send POST HTTP request with voice command.
+
+### Prerequisites
+
+ - Create a account on [IFTTT](https://ifttt.com/login)
+ - Link your Google account on IFTTT
+ - NAT your RaspberryPI HTTP server on your internet box
+ - If necessary configure a dynamic DNS service 
+
+### Configure new APPLET
+
+/!\ Free IFTTT account can use only 5 applets
+
+Create new applet
+![image](https://user-images.githubusercontent.com/59627714/143009099-07930b62-6564-45d6-83aa-fdfe7313a093.png)
+Click  **IF ADD** button
+![image](https://user-images.githubusercontent.com/59627714/143009174-b6b73d97-0cf7-484d-9aa8-cdded6835f84.png)
+Search **Google Assistant** service
+![image](https://user-images.githubusercontent.com/59627714/143009503-3457a877-5e13-4866-849f-599701ac2e89.png)
+Select **Say a phrase with a text ingredient** trigger
+![image](https://user-images.githubusercontent.com/59627714/143009651-3b200a3c-6fd2-4728-9730-1ff5320b2737.png)
+Configure trigger. Text print is **$**
+![image](https://user-images.githubusercontent.com/59627714/143009862-d5a736f6-c676-41a3-87a9-a3f16840eaa4.png)
+Click **THEN THAT ADD** button
+![image](https://user-images.githubusercontent.com/59627714/143010023-5e7ee820-7cad-44ed-8b8e-57633a9678a5.png)
+Search **Webhooks** service
+![image](https://user-images.githubusercontent.com/59627714/143010067-5b5fdc3a-4114-4196-9ce1-ee60a44d6a55.png)
+Choose **Make a web request** action
+![image](https://user-images.githubusercontent.com/59627714/143010271-9db665a4-5b7b-4852-8887-1210668508a7.png)
+Configure action. 
+ - IP : is public IP addess of RaspberryPi HTTP server (Public IP of internet box)
+ - PORT : is NAT port to access RaspberryPi HTTP server
+![image](https://user-images.githubusercontent.com/59627714/143010648-f108aa09-a57c-4b4f-a719-b399185d3e9d.png)
+
+Save and test your new feature. 
+Say :
+ - "OK Google, print memo buy bread"
+ - "OK Google, print invoice"
+
