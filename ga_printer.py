@@ -2,14 +2,14 @@
 # |   Header    | Longueur de données | ?? |       DATA     | CRC8 | Fin de ligne |
 # | 51:78:XX:00 |     05              | 00 | 82:7f:7f:7e:82 | 60   |       ff     |
 # Header XX :
-#     - bf ou a3 : Ecriture de 192 points en RAW
+#     - bf ou a3 : Ecriture de 384 points en RAW
 #     - a1 : Avancer le papier de DATA (ex: 01:00 avance de 1dp, 10:00 avance de 10dp)
 # Data (eg 82 -> 1000 0010) :
 #     - bit[0] : 1 = Black, 0 = White
 #     - bit[2-7] : Nombre de points 
 
 
-from gattlib import GATTRequester
+from gattlib import GATTRequester, DiscoveryService
 from PIL import Image, ImageOps, ImageFont, ImageDraw
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
@@ -18,41 +18,27 @@ import sys
 import argparse
 import textwrap
 
-parser = argparse.ArgumentParser(description="Print an text to a Peripage A6 BLE")
-parser.add_argument("BTMAC",help="BT MAC address of the Peripage A6")
-parser.add_argument("-t", "--text",type=str, help="Text to be printed")
-parser.add_argument("-p", "--port",type=str, help="HTTP port")
-args = parser.parse_args()
+parser = argparse.ArgumentParser(description="Print an text to a thermal printer")
+parser.add_argument("BTMAC", help="BT MAC address of printer (type FIND to scan BLE devices)")
+parser.add_argument("-t", "--text", type=str, help="Text to be printed")
+parser.add_argument("-p", "--port", type=str, help="HTTP port")
+parser.add_argument("-s", "--size", type=str, help="Font size")
 
-if not (args.text or args.port):
-    print("ERROR: Please specfiy text with -t or http port server with -p argument")
-    sys.exit(1)
+args = parser.parse_args()
 
 # ------------------------------------------------------------------------------
 # printer : Print text from command line or http post request
 # ------------------------------------------------------------------------------
-def printer(text):
+def printer(text,size=50):
     req = bleConnect(args.BTMAC)
     print(text)
     if (req.is_connected()):
-        printText(text,req)
+        printText(text, size,req)
         print ("Print end")
         req.disconnect()
     else:
         print("BLE connect error")
     return
-
-class S(BaseHTTPRequestHandler):
-    def _set_response(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        self._set_response()
-        printer(post_data.decode('utf-8'))
 
 # ------------------------------------------------------------------------------
 # imgFromString : Convert string to binary image
@@ -168,8 +154,8 @@ def bleConnect(mac):
 # ------------------------------------------------------------------------------
 # printData : Print text
 # ------------------------------------------------------------------------------
-def printText(text,req):
-    data = binCount(binFromImg(imgFromString(text,50)))
+def printText(text, size, req):
+    data = binCount(binFromImg(imgFromString(text,size)))
     for dat in data:
         # Header of trame
         head = "5178bf00"
@@ -205,7 +191,20 @@ def forwardPaper(dp,req):
 # ------------------------------------------------------------------------------
 # httpserver : Start HTTP server
 # ------------------------------------------------------------------------------
-def httpserver(server_class=HTTPServer, handler_class=S, port=8080):
+class S(BaseHTTPRequestHandler):
+    def _set_response(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+        post_data = self.rfile.read(content_length) # <--- Gets the data itself
+        self._set_response()
+        size=50 if not args.size else args.size
+        printer(post_data.decode('utf-8'),size)
+
+def httpserver(server_class=HTTPServer, handler_class=S, port=8080,):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     try:
@@ -214,10 +213,23 @@ def httpserver(server_class=HTTPServer, handler_class=S, port=8080):
         pass
     httpd.server_close()
 
+# ------------------------------------------------------------------------------
+# bleScan : Scan Bluetooth Low Energy devices
+# ------------------------------------------------------------------------------
+def bleScan():
+    service = DiscoveryService()
+    devices = service.discover(2)
+    for address, name in devices.items():
+        print("name: {}, address: {}".format(name, address))
 
 if __name__ == '__main__':
-
+    if (args.BTMAC=="FIND"):
+        bleScan()
+        sys.exit()
+    if not (args.text or args.port):
+        print("ERROR: Please specfiy text with -t or http port server with -p argument")
+        sys.exit(1)
     if args.text:
-        printer(args.text)
+        printer(args.text,args.size)
     if args.port:
         httpserver(port=int(args.port))
