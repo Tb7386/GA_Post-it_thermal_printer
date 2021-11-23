@@ -39,5 +39,5 @@ Print data (eg 82 -> 1000 0010) :
 
 ## Installation
 
-Install requirement :
-apt install git python-pip3 python3-bluez
+Install RaspiOS depedences :
+apt install git python-pip3 python3-bluez libopenjp2-7
