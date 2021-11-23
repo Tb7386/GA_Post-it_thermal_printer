@@ -83,7 +83,7 @@ python3 ./GA_Post-it_thermal_printer/ga_printer.py FIND
 Result
 ```
 name: , address: 73:2D:48:3E:C9:BE
-name: GA4, address: 7A:4D:3B:FD:FE:ED
+name: GB03, address: 7A:4D:3B:FD:FE:ED
 name: , address: 70:C8:63:81:D2:4B
 ```
 
