@@ -159,7 +159,7 @@ Configure action.
 ![image](https://user-images.githubusercontent.com/59627714/143013975-bddbcb1b-9ce0-46e6-beaf-557baecdf9aa.png)
 
 
-Save and test your new feature. 
+Save and enjoy your new feature. 
 Say :
  - "OK Google, print memo buy bread"
  - "OK Google, print invoice"
