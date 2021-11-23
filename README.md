@@ -143,7 +143,7 @@ Click **THEN THAT ADD** button
 
 Search **Webhooks** service
 
-![image](https://user-images.githubusercontent.com/59627714/143013839-e60b5a4f-95dc-4903-8737-7aa09f609ce5.png)
+![Search **Webhooks** service](https://user-images.githubusercontent.com/59627714/143013839-e60b5a4f-95dc-4903-8737-7aa09f609ce5.png)
 
 Choose **Make a web request** action
 
@@ -161,3 +161,6 @@ Say :
  - "OK Google, print memo buy bread"
  - "OK Google, print invoice"
 
+## Autors
+
+* **Thomas BERGER** Tb7386 [@Tb7386](https://github.com/Tb7386)
