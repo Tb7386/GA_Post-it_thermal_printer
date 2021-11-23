@@ -62,7 +62,7 @@ def imgFromString(s, fontSize):
     img = ImageOps.invert(img.convert('L'))
     img = img.convert('1')
     # Save image to file
-    img.save('img.png')
+    #img.save('img.png')
     return img
 
 # ------------------------------------------------------------------------------
