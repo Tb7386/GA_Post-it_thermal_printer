@@ -59,7 +59,7 @@ class S(BaseHTTPRequestHandler):
 # ------------------------------------------------------------------------------
 def imgFromString(s, fontSize):
     # Font choice
-    font = ImageFont.truetype("liberation-mono/LiberationMono-Regular.ttf", fontSize)
+    font = ImageFont.truetype("dejavu/DejaVuSansMono.ttf", fontSize)
     # Convert inline text to multiline
     s = textwrap.fill (s, width = int(384/font.getsize("1")[0])) 
     # Get size of text
