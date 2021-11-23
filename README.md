@@ -41,3 +41,7 @@ Print data (eg 82 -> 1000 0010) :
 
 Install RaspiOS depedences :
 apt install git python-pip3 python3-bluez libopenjp2-7
+
+Install GA_POSTIT_PRINTER
+git clone https://github.com/Tb7386/GA_Post-it_thermal_printer.git
+pip3 install -r requirements.txt
