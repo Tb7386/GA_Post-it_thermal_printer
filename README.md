@@ -45,7 +45,7 @@ Print data (eg 82 -> 1000 0010) :
 
 ### Install dependencies
 ```
-apt install git python-pip3 python3-bluez libopenjp2-7
+apt install git python3-pip python3-bluez libopenjp2-7
 ```
 ### Clone project and Python dependencies
 ```
