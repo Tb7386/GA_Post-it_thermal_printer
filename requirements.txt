@@ -1,3 +1,2 @@
-Gattlib
 Pillow
 CRC8
