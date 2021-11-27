@@ -51,7 +51,7 @@ def imgFromString(s, fontSize):
     # Get size of text
     size = font.getsize_multiline(s)
     # Fix height and width
-    size_x = 384 if size[0] > 384 else size[0]
+    size_x = 384 #if size[0] > 384 else size[0]
     size_y = font.getsize_multiline(s)[1]#font.getsize(s)[1]*(s.count('\n')+1)
     # Create image
     img = Image.new("RGB", size=(size_x, size_y+10), color="white")
