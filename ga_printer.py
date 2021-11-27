@@ -23,17 +23,16 @@ parser.add_argument("BTMAC", help="BT MAC address of printer (type FIND to scan 
 parser.add_argument("-t", "--text", type=str, help="Text to be printed")
 parser.add_argument("-p", "--port", type=str, help="HTTP port")
 parser.add_argument("-s", "--size", type=str, help="Font size")
-
+parser.add_argument("-d", "--device", type=str, help="Bluetooth Device (by default hci0)")
 args = parser.parse_args()
 
 # ------------------------------------------------------------------------------
 # printer : Print text from command line or http post request
 # ------------------------------------------------------------------------------
-def printer(text):
+def printer(text,size=50):
     req = bleConnect(args.BTMAC)
     print(text)
     if (req.is_connected()):
-        size=50 if not args.size else args.size
         printText(text, size,req)
         print ("Print end")
         req.disconnect()
@@ -131,9 +130,9 @@ def binCount (binImg):
 # ------------------------------------------------------------------------------
 # bleConnect : Connect to printer mac
 # ------------------------------------------------------------------------------
-def bleConnect(mac):
+def bleConnect(mac, device='hci0'):
     host = mac
-    req = GATTRequester(host, False)
+    req = GATTRequester(host, False, device)
     req.connect(True)
     # Some config trame
     req.write_by_handle(0x09, bytes([1, 0]))
@@ -202,7 +201,7 @@ class S(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data = self.rfile.read(content_length) # <--- Gets the data itself
         self._set_response()
-        printer(post_data.decode('utf-8'))
+        printer(post_data.decode('utf-8'),50 if not args.size else args.size)
 
 def httpserver(server_class=HTTPServer, handler_class=S, port=8080,):
     server_address = ('', port)
@@ -216,20 +215,20 @@ def httpserver(server_class=HTTPServer, handler_class=S, port=8080,):
 # ------------------------------------------------------------------------------
 # bleScan : Scan Bluetooth Low Energy devices
 # ------------------------------------------------------------------------------
-def bleScan():
-    service = DiscoveryService()
+def bleScan(device="hci0"):
+    service = DiscoveryService(device)
     devices = service.discover(2)
     for address, name in devices.items():
         print("name: {}, address: {}".format(name, address))
 
 if __name__ == '__main__':
     if (args.BTMAC=="FIND"):
-        bleScan()
+        bleScan(args.device if args.device else bleScan())
         sys.exit()
     if not (args.text or args.port):
         print("ERROR: Please specfiy text with -t or http port server with -p argument")
         sys.exit(1)
     if args.text:
-        printer(args.text)
+        printer(args.text, 50 if not args.size else args.size)
     if args.port:
         httpserver(port=int(args.port))
